@@ -13,8 +13,8 @@ class App extends Component {
     const url = `http://api.giphy.com/v1/gifs/search?q=${value}&api_key=prHxSE1nOEJG6lQoYjNJJ2W2hEFPrw02`;
     await axios.get(url)
         .then((res) => {
-          // console.log(res.data);
-          this.setState({ gifs: res.data});
+          console.log(res);
+          this.setState({ gifs: res["data"].data });
         })
         .catch((error) => {
           console.log(error);
@@ -22,16 +22,16 @@ class App extends Component {
   }
 
   render() {
-      let { data } = this.state.gifs;
-      console.log(data);
+      const { gifs } = this.state;
+      console.log(gifs);
       return (
           <div className="container text-center">
             <SearchBar 
               handleApi={this.handleApi}
             />
-            <GifList gif={data}/> 
+          {gifs.length > 0 && <GifList gif={gifs} />}
           </div>
         );
-      }
+    }
 }
 export default App;
